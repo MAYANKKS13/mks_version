@@ -1,0 +1,44 @@
+.red {
+    background-color:rgb(243, 139, 139);
+}
+
+.card {
+    
+    background-color: rgb(242, 63, 63);
+    margin: 50px;
+    padding: 10px;
+}
+
+.col {
+    display: flex;
+}
+
+.card p {
+    text-align: center;
+    padding-top: 10px;
+    font-size: larger;
+    color: aliceblue;
+}
+
+#cards_landscape_wrap-2{
+    text-align: center;
+    /* background-image: linear-gradient(to right, #000000,#1d3736); */
+  }
+
+   
+
+  #cards_landscape_wrap-2 .container{
+    padding-top: 20px; 
+    padding-bottom: 100px;
+  }
+
+
+  @media (min-width: 767px) {
+    .card {
+        margin: 30px; /* Adjust the margin for smaller screens */
+    }
+
+    .col {
+        flex: 0 0 100%; /* Make columns stack vertically on smaller screens */
+    }
+  }
