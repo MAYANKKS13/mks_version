@@ -7,15 +7,15 @@ import { Component } from '@angular/core';
 })
 export class LoverComponent {
    
-  calmdown: string = '../../assets/sounds/lover/calmdown.mp3';
-  cornelliastreet: string = '../../assets/sounds/lover/cornelliastreet.mp3';
-  cruelsummer: string = '../../assets/sounds/lover/cruelsummer.mp3';
-  daylight: string = '../../assets/sounds/lover/daylight.mp3';
-  londonboy: string = '../../assets/sounds/lover/londonboy.mp3';
-  lover: string = '../../assets/sounds/lover/lover.mp3';
-  paperrings: string = '../../assets/sounds/lover/paperrings.mp3';
-  theman: string = '../../assets/sounds/lover/theman.mp3';
-  met: string = '../../assets/sounds/lover/met.mp3';
+  calmdown: string = 'assets/sounds/lover/calmdown.mp3';
+  cornelliastreet: string = 'assets/sounds/lover/cornelliastreet.mp3';
+  cruelsummer: string = 'assets/sounds/lover/cruelsummer.mp3';
+  daylight: string = 'assets/sounds/lover/daylight.mp3';
+  londonboy: string = 'assets/sounds/lover/londonboy.mp3';
+  lover: string = 'assets/sounds/lover/lover.mp3';
+  paperrings: string = 'assets/sounds/lover/paperrings.mp3';
+  theman: string = 'assets/sounds/lover/theman.mp3';
+  met: string = 'assets/sounds/lover/met.mp3';
 
   isPlaying: HTMLAudioElement | null = null;
    

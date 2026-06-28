@@ -7,10 +7,10 @@ import { Component } from '@angular/core';
 })
 export class Sound2Component {
 
-  lovestory: string = '../../assets/sounds/fearless/lovestory.mp3';
-  ybwm: string = '../../assets/sounds/fearless/ybwm.mp3';
-  whitehorse: string = '../../assets/sounds/fearless/whitehorse.mp3';
-  fifteen: string = '../../assets/sounds/fearless/fifteen.mp3';
+  lovestory: string = 'assets/sounds/fearless/lovestory.mp3';
+  ybwm: string = 'assets/sounds/fearless/ybwm.mp3';
+  whitehorse: string = 'assets/sounds/fearless/whitehorse.mp3';
+  fifteen: string = 'assets/sounds/fearless/fifteen.mp3';
 
   isPlaying: HTMLAudioElement | null = null;
    

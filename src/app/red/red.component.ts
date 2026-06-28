@@ -7,10 +7,10 @@ import { Component } from '@angular/core';
 })
 export class RedComponent {
 
-  tt: string = '../../assets/sounds/red/22.mp3';
-  ikywit: string = '../../assets/sounds/red/ikywit.mp3';
-  wanegbt: string = '../../assets/sounds/red/wanegbt.mp3';
-  fifteen: string = '../../assets/sounds/fearless/fifteen.mp3';
+  tt: string = 'assets/sounds/red/22.mp3';
+  ikywit: string = 'assets/sounds/red/ikywit.mp3';
+  wanegbt: string = 'assets/sounds/red/wanegbt.mp3';
+  fifteen: string = 'assets/sounds/fearless/fifteen.mp3';
 
   isPlaying: HTMLAudioElement | null = null;
    

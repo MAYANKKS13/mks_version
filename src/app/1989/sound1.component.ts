@@ -7,11 +7,11 @@ import { Component } from '@angular/core';
 })
 export class Sound1Component {
 
-  blankspace: string = '../../assets/sounds/1989/blankspace.mp3';
-  shakeitoff: string = '../../assets/sounds/1989/shakeitoff.mp3';
-  badblood: string = '../../assets/sounds/1989/badblood.mp3';
-  style: string = '../../assets/sounds/1989/style.mp3';
-  outofwoods: string = '../../assets/sounds/1989/outofwoods.mp3';
+  blankspace: string = 'assets/sounds/1989/blankspace.mp3';
+  shakeitoff: string = 'assets/sounds/1989/shakeitoff.mp3';
+  badblood: string = 'assets/sounds/1989/badblood.mp3';
+  style: string = 'assets/sounds/1989/style.mp3';
+  outofwoods: string = 'assets/sounds/1989/outofwoods.mp3';
   isPlaying: HTMLAudioElement | null = null;
    
   
