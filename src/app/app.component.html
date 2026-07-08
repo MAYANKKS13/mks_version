@@ -5,32 +5,35 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       
-      <div class="collapse navbar-collapse" id="navbarText">
+      <div #navbarCollapse class="collapse navbar-collapse" id="navbarText">
+      <div  #navbarCollapse class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" routerLink="1989">1989</a>
+            <a class="nav-link" routerLink="1989" data-bs-toggle="collapse" data-bs-target="#navbarText">1989</a>
           </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <li class="nav-item">
-            <a class="nav-link" routerLink="fearless">Fearless</a>
+            <a class="nav-link" routerLink="fearless" data-bs-toggle="collapse" data-bs-target="#navbarText">Fearless</a>
           </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <li class="nav-item">
-            <a class="nav-link" routerLink="red">Red</a>
+            <a class="nav-link" routerLink="red" data-bs-toggle="collapse" data-bs-target="#navbarText">Red</a>
           </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <li class="nav-item">
-            <a class="nav-link" routerLink="speaknow">SpeakNow</a>
+            <a class="nav-link" routerLink="speaknow" data-bs-toggle="collapse" data-bs-target="#navbarText">SpeakNow</a>
           </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <li class="nav-item">
-            <a class="nav-link" routerLink="lover">Lover</a>
+            <a class="nav-link" routerLink="lover" data-bs-toggle="collapse" data-bs-target="#navbarText">Lover</a>
           </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <li class="nav-item">
-            <a class="nav-link" routerLink="reputation">Reputation</a>
+            <a class="nav-link" routerLink="reputation" data-bs-toggle="collapse" data-bs-target="#navbarText">Reputation</a>
           </li>
         </ul>
        
       </div>
+    </div>
     </div>
   </nav>
 
 
 
 <router-outlet></router-outlet>
+<app-player></app-player>

@@ -1,94 +1,45 @@
 <div class="speaknow">
-
-<div class="topic">SpeakNow</div>
-
-
-<div id="cards_landscape_wrap-2">
-  <div class="container">
-
-<div class="row ">
- 
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/speaknow/btd.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Back To December</p>
-        <audio class="custom" controls controlsList="nodownload" [src]="btd" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
+  <div class="topic">SpeakNow</div>
+    <div id="cards_landscape_wrap-2">
+      <div class="container">    
+        <div class="row">
+          <div class="col-md-4" *ngFor="let song of songs">
+            <div class="song-card" [class.playing]="isCurrentSong(song)">
+                <div class="image-container">
+                    <img [src]="song.image" [alt]="song.name">
+                    <div class="play-overlay" (click)="playSong(song)">
+                        {{
+                        isCurrentSong(song) &&
+                        (musicService.isPlaying | async)
+                        ? '⏸'
+                        : '▶'
+                        }}
+                    </div>
+                </div>
+                <div class="song-info">
+                    <div class="playing-badge" *ngIf="isCurrentSong(song)"> 🎵 NOW PLAYING </div>
+                    <h5>{{song.name}}</h5>
+                    <div class="song-actions">
+                        <button class="favorite-btn" (click)="$event.stopPropagation(); favoriteService.toggleFavorite(song)">
+                            {{
+                                favoriteService.isFavorite(song)
+                                ? '❤️'
+                                : '🤍'
+                            }}
+                        </button>
+                        <button class="play-btn" (click)="playSong(song)">
+                            {{
+                            isCurrentSong(song) &&
+                            (musicService.isPlaying | async)
+                            ? 'Pause'
+                            : 'Play'
+                            }}
+                        </button>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/speaknow/enchanted.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Enchanted</p>       
-        <audio class="custom" controls controlsList="nodownload" [src]="enchanted" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/speaknow/lastkiss.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Kast Kiss</p>       
-        <audio class="custom" controls controlsList="nodownload" [src]="lastkiss" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/speaknow/haunted.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Haunted</p>       
-        <audio class="custom" controls controlsList="nodownload" [src]="haunted" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/speaknow/mean.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Mean</p>       
-        <audio class="custom" controls controlsList="nodownload" [src]="mean" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/speaknow/ll.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Long Live</p>       
-        <audio class="custom" controls controlsList="nodownload" [src]="ll" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/speaknow/mine.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Mine</p>       
-        <audio class="custom" controls controlsList="nodownload" [src]="mine" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/speaknow/sparksfly.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>SparksFly</p>       
-        <audio class="custom" controls controlsList="nodownload" [src]="sparksfly" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
-      </div>
-    </div>
-  </div>
-</div>
-
-</div>
-</div>
 </div>

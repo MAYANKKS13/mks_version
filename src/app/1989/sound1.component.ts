@@ -1,34 +1,78 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Song } from '../models/song';
+import { FavoriteService } from '../services/favorite.service';
+import { MusicPlayerService } from '../services/music-player.service';
 
 @Component({
   selector: 'app-sound1',
   templateUrl: './sound1.component.html',
   styleUrls: ['./sound1.component.css']
 })
-export class Sound1Component {
+export class Sound1Component implements OnInit {
+
+  constructor(
+    public musicService: MusicPlayerService,
+     public favoriteService: FavoriteService
+  ){
+  
+  }
 
   blankspace: string = 'assets/sounds/1989/blankspace.mp3';
   shakeitoff: string = 'assets/sounds/1989/shakeitoff.mp3';
   badblood: string = 'assets/sounds/1989/badblood.mp3';
   style: string = 'assets/sounds/1989/style.mp3';
   outofwoods: string = 'assets/sounds/1989/outofwoods.mp3';
-  isPlaying: HTMLAudioElement | null = null;
-   
-  
-  onPlay(event: Event) {
-    if (this.isPlaying && this.isPlaying !== event.target) {
-      this.isPlaying.pause();
-      this.isPlaying.currentTime = 0;
-    }
-    this.isPlaying = event.target as HTMLAudioElement;
-  }
+
+  songs : Song[] = [
+        {
+          name: 'Blank Space',
+          url: this.blankspace,
+          album: '1989',
+           image:'assets/images/1989/blankspace.jfif'
+        },
+        {
+          name: 'Shake It Off',
+          url: this.shakeitoff,
+          album: '1989',
+           image:'assets/images/1989/shakeitoff.jfif'
+        },
+        {
+          name: 'Bad Blood',
+          url: this.badblood,
+          album: '1989',
+           image:'assets/images/1989/badblood.jfif'
+        },
+        {
+          name: 'Style',
+          url: this.style,
+          album: '1989',
+           image:'assets/images/1989/style.jfif'
+        },
+        {
+          name: 'Out of the Woods',
+          url: this.outofwoods,
+          album: '1989',
+           image:'assets/images/1989/outofwoods.jfif'
+        }
+        ];
 
 
-  onPause(event: Event) {
-    if (this.isPlaying === event.target) {
-      this.isPlaying = null; 
-    }
+   currentIndex: number = 0;
+   currentSong: Song | null = null;
+
+  ngOnInit() {
+    this.musicService.currentSong.subscribe(song => {
+        this.currentSong = song;
+    });
+}
+
+  playSong(song: Song) {
+      this.musicService.playSong(song, this.songs);
   }
+
+  isCurrentSong(song: Song): boolean {
+    return this.currentSong?.url === song.url;
+}
 
 
 

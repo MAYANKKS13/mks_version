@@ -1,61 +1,47 @@
 <div class="blank">
-
-<div class="topic">1989</div>
-
-
-<div id="cards_landscape_wrap-2">
-  <div class="container">
-
-<div class="row">
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/1989/blankspace.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Blank Space</p>       
-        <audio class="custom" controls controlsList="nodownload" [src]="blankspace" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
+  <div class="topic">1989</div>
+    <div id="cards_landscape_wrap-2">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4" *ngFor="let song of songs">
+            <div class="song-card" [class.playing]="isCurrentSong(song)">
+                <div class="image-container">
+                    <img [src]="song.image" [alt]="song.name">
+                    <div class="play-overlay" (click)="playSong(song)">
+                        {{
+                        isCurrentSong(song) &&
+                        (musicService.isPlaying | async)
+                        ? '⏸'
+                        : '▶'
+                        }}
+                    </div>
+                </div>
+                <div class="song-info">
+                    <div class="playing-badge" *ngIf="isCurrentSong(song)"> 🎵 NOW PLAYING </div>
+                    <h5>{{song.name}}</h5>
+                    <div class="song-actions">
+                        <button class="favorite-btn" (click)="$event.stopPropagation(); favoriteService.toggleFavorite(song)">
+                            {{
+                                favoriteService.isFavorite(song)
+                                ? '❤️'
+                                : '🤍'
+                            }}
+                        </button>
+                        <button class="play-btn" (click)="playSong(song)">
+                            {{
+                            isCurrentSong(song) &&
+                            (musicService.isPlaying | async)
+                            ? 'Pause'
+                            : 'Play'
+                            }}
+                        </button>
+                  </div>
+                </div>
+              </div>
+          </div>    
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/1989/shakeitoff.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Shake It Off</p>
-        <audio class="custom" controls controlsList="nodownload" [src]="shakeitoff" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/1989/badblood.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Bad Blood</p>
-        <audio class="custom" controls controlsList="nodownload" [src]="badblood" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/1989/style.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Style</p>
-        <audio class="custom" controls controlsList="nodownload" [src]="style" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/1989/outofwoods.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Out Of Woods</p>
-        <audio class="custom" controls controlsList="nodownload" [src]="outofwoods" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
-      </div>
-    </div>
-  </div>
-</div>
-
-</div>
-</div>
 </div>
 
 

@@ -1,54 +1,45 @@
 <div class="fearless">
-
-<div class="topic">Fearless</div>
-
-
-<div id="cards_landscape_wrap-2">
-  <div class="container">
-
-<div class="row ">
- 
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/fearless/lovestory.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Love Story</p>
-        <audio class="custom" controls controlsList="nodownload" [src]="lovestory" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
+  <div class="topic">Fearless</div>
+    <div id="cards_landscape_wrap-2">
+      <div class="container">
+        <div class="row "> 
+          <div class="col-md-4" *ngFor="let song of songs">
+            <div class="song-card" [class.playing]="isCurrentSong(song)">
+                <div class="image-container">
+                    <img [src]="song.image" [alt]="song.name">
+                    <div class="play-overlay" (click)="playSong(song)">
+                        {{
+                        isCurrentSong(song) &&
+                        (musicService.isPlaying | async)
+                        ? '⏸'
+                        : '▶'
+                        }}
+                    </div>
+                </div>
+                <div class="song-info">
+                    <div class="playing-badge" *ngIf="isCurrentSong(song)"> 🎵 NOW PLAYING </div>
+                    <h5>{{song.name}}</h5>
+                    <div class="song-actions">
+                        <button class="favorite-btn" (click)="$event.stopPropagation(); favoriteService.toggleFavorite(song)">
+                            {{
+                                favoriteService.isFavorite(song)
+                                ? '❤️'
+                                : '🤍'
+                            }}
+                        </button>
+                        <button class="play-btn" (click)="playSong(song)">
+                            {{
+                            isCurrentSong(song) &&
+                            (musicService.isPlaying | async)
+                            ? 'Pause'
+                            : 'Play'
+                            }}
+                        </button>
+                  </div>
+                </div>
+              </div>
+           </div>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/fearless/ybwm.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>You Belong With Me</p>       
-        <audio class="custom" controls controlsList="nodownload" [src]="ybwm" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/fearless/whitehorse.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Whitehorse</p>       
-        <audio class="custom" controls controlsList="nodownload" [src]="whitehorse" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card">
-      <img src="assets/images/fearless/fifteen.jfif" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p>Fifteen</p>       
-        <audio class="custom" controls controlsList="nodownload" [src]="fifteen" (play)="onPlay($event)" (pause)="onPause($event)"></audio>
-      </div>
-    </div>
-  </div>
-</div>
-
-</div>
-</div>
 </div>

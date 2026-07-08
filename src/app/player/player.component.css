@@ -1,0 +1,63 @@
+.music-player{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #111;
+    color: white;
+    padding: 10px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 -3px 12px rgba(0,0,0,.45);
+    z-index: 1000;
+}
+
+.song-info{
+    text-align:center;
+}
+
+.song-name{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.album-name{
+    font-size:13px;
+    color:#bdbdbd;
+}
+
+.progress-section{
+    width:88%;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.progress-section input{
+    flex:1;
+    cursor:pointer;
+}
+
+.controls{
+    display:flex;
+    gap:25px;
+}
+
+.controls button{
+    width:48px;
+    height:48px;
+    border:none;
+    border-radius:50%;
+    background:#ff4fa3;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.controls button:hover{
+    transform:scale(1.08);
+    background:#ff69b4;
+}

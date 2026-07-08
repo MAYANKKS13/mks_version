@@ -1,0 +1,34 @@
+<div class="music-player">
+    <div class="song-info">
+        <div class="song-name">{{ currentSongName }}</div>
+        <div class="album-name">{{ albumName }}</div>
+    </div>
+    <div class="progress-section">
+        <span>{{ formatTime(currentTime) }}</span>
+        <input
+            type="range"
+            min="0"
+            [max]="duration"
+            [value]="currentTime"
+            (input)="onSeek($event)"
+        >
+        <span>{{ formatTime(duration) }}</span>
+    </div>
+    <div class="controls">
+        <button (click)="previousSong()">
+            ⏮
+        </button>
+        <button (click)="togglePlayPause()">
+            {{ isPlaying ? '⏸' : '▶' }}
+        </button>
+        <button (click)="nextSong()">
+            ⏭
+        </button>
+        <button (click)="toggleShuffle()">
+            {{(shuffle | async)?'🔀':'➡️'}}
+        </button>
+        <button (click)="toggleRepeat()">
+            {{ (repeatMode | async) === 0 ? '➡️' : (repeatMode | async) === 1 ? '🔁' : '🔂' }}
+        </button>
+    </div>
+</div>

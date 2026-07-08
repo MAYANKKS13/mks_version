@@ -11,6 +11,7 @@ import { RedComponent } from './red/red.component';
 import { SpeaknowComponent } from './speaknow/speaknow.component';
 import { ReputationComponent } from './reputation/reputation.component';
 import { LoverComponent } from './lover/lover.component';
+import { PlayerComponent } from './player/player.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { LoverComponent } from './lover/lover.component';
     RedComponent,
     SpeaknowComponent,
     ReputationComponent,
-    LoverComponent
+    LoverComponent,
+    PlayerComponent
   ],
   imports: [
     BrowserModule,
