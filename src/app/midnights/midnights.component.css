@@ -1,0 +1,9 @@
+.midnights {
+    background: linear-gradient(180deg, #1d264f 0%, #0c1024 100%);
+    background-color: #1d264f;
+}
+
+.song-card {
+    background: #111633;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}

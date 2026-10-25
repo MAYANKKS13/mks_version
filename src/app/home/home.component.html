@@ -1,10 +1,54 @@
-<header>
-<div class="header__content">
-    <h1>Welcome to mks_version</h1>
-    <h2>A simple music player with song collections of Taylor Swift.<br>
-         One can lift up their mood by listening songs from desired album.
-
-    </h2>
-    <button class="btn">Registrarme</button>
-</div>
+<header class="hero-header">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-badge">✨ Complete Era Experience</span>
+    <h1 class="hero-title">Welcome to mks_version</h1>
+    <p class="hero-subtitle">
+      A music player featuring the discography of Taylor Swift. 
+      Select your favorite era, play memorable tracks, and build your personalized collection.
+    </p>
+    <div class="hero-actions">
+      <button class="hero-btn primary-btn" (click)="scrollToAlbums()">
+        Explore Albums 🎵
+      </button>
+      <a class="hero-btn secondary-btn" routerLink="/favorites">
+        My Favorites ❤️
+      </a>
+    </div>
+  </div>
 </header>
+
+<section id="albums-section" class="albums-section">
+  <div class="container py-5">
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title">Explore by Era</h2>
+      <p class="section-subtitle">Select an album below to explore songs and start listening</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      <div class="col-12 col-sm-6 col-lg-4" *ngFor="let album of albums">
+        <div class="album-card" [routerLink]="album.route">
+          <div class="album-img-wrap">
+            <img [src]="album.image" [alt]="album.name" class="album-img">
+            <div class="album-overlay">
+              <span class="play-indicator">▶ Enter Album</span>
+            </div>
+            <span class="album-year-badge">{{ album.year }}</span>
+          </div>
+          <div class="album-details">
+            <div class="album-title-row">
+              <h3 class="album-name">{{ album.name }}</h3>
+              <span class="album-dot" [style.background-color]="album.color"></span>
+            </div>
+            <p class="album-theme">{{ album.theme }}</p>
+            <div class="album-action-row">
+              <span class="listen-link">Listen Now</span>
+              <span class="arrow-icon">→</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

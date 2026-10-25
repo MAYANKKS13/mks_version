@@ -1,34 +1,144 @@
-<div class="music-player">
-    <div class="song-info">
-        <div class="song-name">{{ currentSongName }}</div>
-        <div class="album-name">{{ albumName }}</div>
+<!-- Queue Slide-up Drawer -->
+<div class="queue-drawer" *ngIf="showQueue">
+    <div class="queue-header">
+        <div class="queue-title-wrap">
+            <span class="queue-icon">📜</span>
+            <span class="queue-title">Up Next ({{ musicService.playlist.length }} tracks)</span>
+        </div>
+        <button class="queue-close-btn" (click)="closeQueue()" title="Close Queue">✕</button>
     </div>
-    <div class="progress-section">
-        <span>{{ formatTime(currentTime) }}</span>
+
+    <div class="queue-list" *ngIf="musicService.playlist.length > 0">
+        <div 
+            *ngFor="let s of musicService.playlist; let idx = index" 
+            class="queue-item"
+            [class.active-track]="s.url === musicService.currentSong.value?.url"
+            (click)="playQueueSong(s)"
+        >
+            <span class="queue-track-idx">{{ idx + 1 }}</span>
+            <img [src]="s.image" [alt]="s.name" class="queue-thumb">
+            <div class="queue-track-info">
+                <span class="queue-song-name">{{ s.name }}</span>
+                <span class="queue-album-name">{{ s.album }}</span>
+            </div>
+            <span *ngIf="s.url === musicService.currentSong.value?.url" class="queue-playing-indicator">
+                {{ isPlaying ? '🎵' : '⏸' }}
+            </span>
+        </div>
+    </div>
+
+    <div class="queue-empty" *ngIf="musicService.playlist.length === 0">
+        No tracks in queue. Play an album or song to populate the queue!
+    </div>
+</div>
+
+<!-- Bottom Floating Player Bar -->
+<div class="music-player">
+    <div class="player-left">
+        <div class="album-art-wrap">
+            <img *ngIf="currentSongImage" [src]="currentSongImage" [alt]="currentSongName" class="player-album-art">
+            <div *ngIf="!currentSongImage" class="player-album-art-placeholder">🎵</div>
+        </div>
+        <div class="song-info">
+            <div class="song-name" [title]="currentSongName">{{ currentSongName }}</div>
+            <div class="album-name">{{ albumName }}</div>
+        </div>
+    </div>
+
+    <div class="player-center">
+        <div class="controls">
+            <!-- Shuffle Button with left-side micro popup -->
+            <div class="ctrl-wrap-shuffle">
+                <div class="side-micro-popup left-popup" [class.show]="shuffleToastVisible">
+                    {{ shuffleToastMessage }}
+                </div>
+                <button 
+                    class="ctrl-btn shuffle-btn" 
+                    (click)="toggleShuffle()" 
+                    [class.active]="(shuffle | async)"
+                    [title]="(shuffle | async) ? 'Shuffle is ON' : 'Shuffle is OFF'"
+                >
+                    <span class="ctrl-icon">{{ (shuffle | async) ? '🔀' : '➡️' }}</span>
+                    <span class="sub-mode-tag" *ngIf="(shuffle | async)">SHUF</span>
+                </button>
+            </div>
+
+            <!-- Previous Button -->
+            <button class="ctrl-btn" (click)="previousSong()" title="Previous (P)">
+                ⏮
+            </button>
+
+            <!-- Play / Pause Button -->
+            <button class="ctrl-btn play-pause-btn" (click)="togglePlayPause()" [title]="isPlaying ? 'Pause (Space)' : 'Play (Space)'">
+                {{ isPlaying ? '⏸' : '▶' }}
+            </button>
+
+            <!-- Next Button -->
+            <button class="ctrl-btn" (click)="nextSong()" title="Next (N)">
+                ⏭
+            </button>
+
+            <!-- Repeat Button with right-side micro popup -->
+            <div class="ctrl-wrap-repeat">
+                <button 
+                    class="ctrl-btn repeat-btn" 
+                    (click)="toggleRepeat()" 
+                    [class.active]="(repeatMode | async) !== 0"
+                    [class.mode-one]="(repeatMode | async) === 2"
+                    [title]="'Repeat Mode'"
+                >
+                    <span class="ctrl-icon">
+                        {{ (repeatMode | async) === 0 ? '➡️' : ((repeatMode | async) === 1 ? '🔁' : '🔂') }}
+                    </span>
+                    <span class="sub-mode-tag" *ngIf="(repeatMode | async) === 1">ALL</span>
+                    <span class="sub-mode-tag" *ngIf="(repeatMode | async) === 2">ONE</span>
+                </button>
+                <div class="side-micro-popup right-popup" [class.show]="repeatToastVisible">
+                    {{ repeatToastMessage }}
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-section">
+            <span class="time-label">{{ formatTime(currentTime) }}</span>
+            <input
+                type="range"
+                class="progress-slider"
+                min="0"
+                [max]="duration"
+                [value]="currentTime"
+                (input)="onSeek($event)"
+            >
+            <span class="time-label">{{ formatTime(duration) }}</span>
+        </div>
+    </div>
+
+    <div class="player-right">
+        <!-- Playback speed selector -->
+        <button class="speed-btn" (click)="cyclePlaybackRate()" title="Cycle Speed (0.75x, 1x, 1.25x, 1.5x)">
+            {{ currentRate }}x
+        </button>
+
+        <!-- Queue Drawer Toggle -->
+        <button class="queue-toggle-btn" [class.active]="showQueue" (click)="toggleQueue()" title="Toggle Up Next Queue">
+            📜
+        </button>
+
+        <!-- Mute Button -->
+        <button class="vol-btn" (click)="toggleMute()" [title]="isMuted ? 'Unmute (M)' : 'Mute (M)'">
+            {{ isMuted || volume === 0 ? '🔇' : (volume < 0.5 ? '🔉' : '🔊') }}
+        </button>
+
+        <!-- Volume Slider -->
         <input
             type="range"
+            class="volume-slider"
             min="0"
-            [max]="duration"
-            [value]="currentTime"
-            (input)="onSeek($event)"
+            max="1"
+            step="0.02"
+            [value]="isMuted ? 0 : volume"
+            (input)="onVolumeChange($event)"
+            title="Volume"
         >
-        <span>{{ formatTime(duration) }}</span>
-    </div>
-    <div class="controls">
-        <button (click)="previousSong()">
-            ⏮
-        </button>
-        <button (click)="togglePlayPause()">
-            {{ isPlaying ? '⏸' : '▶' }}
-        </button>
-        <button (click)="nextSong()">
-            ⏭
-        </button>
-        <button (click)="toggleShuffle()">
-            {{(shuffle | async)?'🔀':'➡️'}}
-        </button>
-        <button (click)="toggleRepeat()">
-            {{ (repeatMode | async) === 0 ? '➡️' : (repeatMode | async) === 1 ? '🔁' : '🔂' }}
-        </button>
     </div>
 </div>

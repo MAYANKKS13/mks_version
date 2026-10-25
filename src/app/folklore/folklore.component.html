@@ -1,0 +1,84 @@
+<div class="folklore album-page-wrapper">
+  <div class="container">
+    <div class="album-hero-bar">
+      <h1 class="topic">Folklore</h1>
+      <div class="album-info-pill">
+        <span>🌲 Indie Folk Era</span> • <span>{{ songs.length }} Tracks</span> • <span>Taylor Swift</span>
+      </div>
+      <div class="album-header-actions">
+        <button class="album-action-btn play-all" (click)="playAll()">
+          ▶ Play Album
+        </button>
+        <button class="album-action-btn shuffle-btn" (click)="shufflePlay()">
+          🔀 Shuffle
+        </button>
+      </div>
+
+      <!-- Era Lore & Liked Progress -->
+      <div class="era-lore-card" *ngIf="eraInfo">
+        <p class="era-quote">{{ eraInfo.quote }}</p>
+        <div class="era-lore-details">
+          <span class="era-lore-badge">{{ eraInfo.accolades }}</span>
+          <span class="era-lore-badge">💡 {{ eraInfo.funFact }}</span>
+        </div>
+        <div class="era-progress-wrap">
+          <div class="era-progress-header">
+            <span>Era Liked Collection</span>
+            <span>{{ likedCount }} of {{ songs.length }} ({{ likedPercent }}%)</span>
+          </div>
+          <div class="era-progress-track">
+            <div class="era-progress-fill" [style.width.%]="likedPercent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      <div class="col-12 col-md-6 col-lg-4" *ngFor="let song of songs; let i = index">
+        <div class="song-card" [class.playing]="isCurrentSong(song)">
+          <div class="image-container">
+            <span class="track-badge">#{{ i + 1 }}</span>
+            <img [src]="song.image" [alt]="song.name" loading="lazy">
+
+            <div class="play-overlay" (click)="playSong(song)">
+              {{
+                isCurrentSong(song) && (musicService.isPlaying | async)
+                  ? '⏸'
+                  : '▶'
+              }}
+            </div>
+          </div>
+          <div class="song-info">
+            <div class="playing-badge" *ngIf="isCurrentSong(song)">
+              <span>NOW PLAYING</span>
+              <span class="equalizer-bars" *ngIf="musicService.isPlaying | async">
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+              </span>
+            </div>
+            <h5 [title]="song.name">{{ song.name }}</h5>
+
+            <div class="song-actions">
+              <button
+                class="favorite-btn"
+                [class.active]="favoriteService.isFavorite(song)"
+                (click)="$event.stopPropagation(); favoriteService.toggleFavorite(song)"
+                [title]="favoriteService.isFavorite(song) ? 'Remove Favorite' : 'Add to Favorites'"
+              >
+                {{ favoriteService.isFavorite(song) ? '❤️' : '🤍' }}
+              </button>
+              <button class="play-btn" (click)="playSong(song)">
+                {{
+                  isCurrentSong(song) && (musicService.isPlaying | async)
+                    ? 'Pause'
+                    : 'Play'
+                }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

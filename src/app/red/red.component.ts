@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Song } from '../models/song';
 import { MusicPlayerService } from '../services/music-player.service';
 import { FavoriteService } from '../services/favorite.service';
+import { SongCatalogService, AlbumEraInfo } from '../services/song-catalog.service';
 
 @Component({
   selector: 'app-red',
@@ -10,60 +11,55 @@ import { FavoriteService } from '../services/favorite.service';
 })
 export class RedComponent implements OnInit {
 
+  eraInfo: AlbumEraInfo | undefined;
+  songs: Song[] = [];
+  currentIndex: number = 0;
+  currentSong: Song | null = null;
+
   constructor(
     public musicService: MusicPlayerService,
-     public favoriteService: FavoriteService
+    public favoriteService: FavoriteService,
+    private songCatalog: SongCatalogService
   ){
-  
+    this.eraInfo = this.songCatalog.getEraInfo('Red');
+    this.songs = this.songCatalog.getSongsByAlbum('Red');
   }
 
-  tt: string = 'assets/sounds/red/22.mp3';
-  ikywit: string = 'assets/sounds/red/ikywit.mp3';
-  wanegbt: string = 'assets/sounds/red/wanegbt.mp3';
-  fifteen: string = 'assets/sounds/fearless/fifteen.mp3';
-
-  songs : Song[] = [
-    {
-      name: '22',
-      url: this.tt,
-      album: 'Red',
-      image:'assets/images/red/22.jfif'
-    },
-    {
-      name: 'I Knew You Were Trouble',
-      url: this.ikywit,
-      album: 'Red',
-      image:'assets/images/red/ikywit.jfif'
-    },
-    {
-      name: 'We Are Never Ever Getting Back Together',
-      url: this.wanegbt,
-      album: 'Red',
-      image:'assets/images/red/wanegbt.jfif'
-    },
-    {
-      name: 'Fifteen',
-      url: this.fifteen,
-      album: 'Fearless',
-      image:'assets/images/fearless/fifteen.jfif'
-    }
-    ];
-
-   currentIndex: number = 0;
-   currentSong: Song | null = null;
-
-ngOnInit() {
+  ngOnInit() {
     this.musicService.currentSong.subscribe(song => {
-        this.currentSong = song;
+      this.currentSong = song;
     });
-}
-
-playSong(song: Song) {
-      this.musicService.playSong(song, this.songs);
   }
 
-isCurrentSong(song: Song): boolean {
-    return this.currentSong?.url === song.url;
-}
+  playSong(song: Song) {
+    this.musicService.playSong(song, this.songs);
+  }
 
+  isCurrentSong(song: Song): boolean {
+    return this.currentSong?.url === song.url;
+  }
+
+  playAll() {
+    if (this.songs.length > 0) {
+      this.musicService.playSong(this.songs[0], this.songs);
+    }
+  }
+
+  get likedCount(): number {
+    return this.songs.filter(s => this.favoriteService.isFavorite(s)).length;
+  }
+
+  get likedPercent(): number {
+    return this.songs.length ? Math.round((this.likedCount / this.songs.length) * 100) : 0;
+  }
+
+  shufflePlay() {
+    if (this.songs.length > 0) {
+      if (!this.musicService.shuffle.value) {
+        this.musicService.toggleShuffle();
+      }
+      const randomIdx = Math.floor(Math.random() * this.songs.length);
+      this.musicService.playSong(this.songs[randomIdx], this.songs);
+    }
+  }
 }

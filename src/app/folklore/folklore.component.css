@@ -1,0 +1,9 @@
+.folklore {
+    background: linear-gradient(180deg, #2d4a3e 0%, #15221c 100%);
+    background-color: #2d4a3e;
+}
+
+.song-card {
+    background: #1e332a;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}

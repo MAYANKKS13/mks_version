@@ -12,6 +12,9 @@ import { SpeaknowComponent } from './speaknow/speaknow.component';
 import { ReputationComponent } from './reputation/reputation.component';
 import { LoverComponent } from './lover/lover.component';
 import { PlayerComponent } from './player/player.component';
+import { FavoritesComponent } from './favorites/favorites.component';
+import { FolkloreComponent } from './folklore/folklore.component';
+import { MidnightsComponent } from './midnights/midnights.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { PlayerComponent } from './player/player.component';
     SpeaknowComponent,
     ReputationComponent,
     LoverComponent,
-    PlayerComponent
+    PlayerComponent,
+    FavoritesComponent,
+    FolkloreComponent,
+    MidnightsComponent
   ],
   imports: [
     BrowserModule,

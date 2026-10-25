@@ -1,39 +1,92 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="">mks_version</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
-      <div #navbarCollapse class="collapse navbar-collapse" id="navbarText">
-      <div  #navbarCollapse class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="1989" data-bs-toggle="collapse" data-bs-target="#navbarText">1989</a>
-          </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <li class="nav-item">
-            <a class="nav-link" routerLink="fearless" data-bs-toggle="collapse" data-bs-target="#navbarText">Fearless</a>
-          </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <li class="nav-item">
-            <a class="nav-link" routerLink="red" data-bs-toggle="collapse" data-bs-target="#navbarText">Red</a>
-          </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <li class="nav-item">
-            <a class="nav-link" routerLink="speaknow" data-bs-toggle="collapse" data-bs-target="#navbarText">SpeakNow</a>
-          </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <li class="nav-item">
-            <a class="nav-link" routerLink="lover" data-bs-toggle="collapse" data-bs-target="#navbarText">Lover</a>
-          </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <li class="nav-item">
-            <a class="nav-link" routerLink="reputation" data-bs-toggle="collapse" data-bs-target="#navbarText">Reputation</a>
-          </li>
-        </ul>
-       
+<nav class="navbar navbar-expand-lg app-navbar">
+  <div class="container-fluid px-lg-4">
+    <a class="navbar-brand brand-title" routerLink="/">
+      <span class="brand-sparkle">✨</span> mks_version
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarMain">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-eras">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/1989" routerLinkActive="active">1989</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/fearless" routerLinkActive="active">Fearless</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/red" routerLinkActive="active">Red</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/speaknow" routerLinkActive="active">SpeakNow</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/lover" routerLinkActive="active">Lover</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/reputation" routerLinkActive="active">Reputation</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/folklore" routerLinkActive="active">Folklore</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/midnights" routerLinkActive="active">Midnights</a>
+        </li>
+      </ul>
+
+      <!-- Global Live Search Bar -->
+      <div class="search-container mx-lg-3 my-2 my-lg-0">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="text" 
+            class="search-input" 
+            placeholder="Search songs or albums..."
+            [(ngModel)]="searchQuery"
+            (input)="onSearchChange()"
+            (focus)="onSearchChange()"
+          >
+          <button *ngIf="searchQuery" class="search-clear-btn" (click)="clearSearch()">✕</button>
+        </div>
+
+        <!-- Dropdown Live Results -->
+        <div class="search-dropdown" *ngIf="showResults">
+          <div *ngIf="searchResults.length === 0" class="search-no-results">
+            No tracks found matching "{{ searchQuery }}"
+          </div>
+          <div 
+            *ngFor="let result of searchResults" 
+            class="search-result-item"
+            (click)="playSearchedSong(result)"
+          >
+            <img [src]="result.image" [alt]="result.name" class="search-thumb">
+            <div class="search-info">
+              <span class="search-song-name">{{ result.name }}</span>
+              <span class="search-album-name">{{ result.album }}</span>
+            </div>
+            <span class="search-play-icon">▶</span>
+          </div>
+        </div>
       </div>
+
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link nav-favorites-pill" routerLink="/favorites" routerLinkActive="active">
+            ❤️ Favorites
+          </a>
+        </li>
+      </ul>
     </div>
-    </div>
-  </nav>
+  </div>
+</nav>
 
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
 
-
-<router-outlet></router-outlet>
 <app-player></app-player>

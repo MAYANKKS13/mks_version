@@ -1,0 +1,80 @@
+<div class="favorites-container">
+  <div class="container py-4">
+    <!-- Header -->
+    <div class="favorites-header text-center mb-4">
+      <span class="favorites-pill">❤️ Your Personal Collection</span>
+      <h1 class="page-title">Favorite Songs</h1>
+      <p class="page-subtitle" *ngIf="songs.length > 0">
+        You have {{ songs.length }} saved {{ songs.length === 1 ? 'track' : 'tracks' }}.
+      </p>
+      
+      <!-- Actions Bar -->
+      <div class="favorites-actions" *ngIf="songs.length > 0">
+        <button class="action-btn play-all-btn" (click)="playAll()">
+          ▶ Play All
+        </button>
+        <button class="action-btn clear-btn" (click)="clearAll()">
+          🗑 Clear All
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state text-center" *ngIf="songs.length === 0">
+      <div class="empty-icon">🤍</div>
+      <h3>No favorites added yet!</h3>
+      <p>Click the heart icon on any song across Taylor's eras to save it here for quick access.</p>
+      <a routerLink="/" class="browse-btn">✨ Browse Eras & Albums</a>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="row g-4 justify-content-center" *ngIf="songs.length > 0">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let song of songs; let i = index">
+        <div class="song-card" [class.playing]="isCurrentSong(song)">
+          <div class="image-container">
+            <span class="track-badge">#{{ i + 1 }}</span>
+            <img [src]="song.image" [alt]="song.name" loading="lazy">
+
+            <div class="play-overlay" (click)="playSong(song)">
+              {{
+                isCurrentSong(song) && (musicService.isPlaying | async)
+                  ? '⏸'
+                  : '▶'
+              }}
+            </div>
+            <span class="album-tag">{{ song.album }}</span>
+          </div>
+
+          <div class="song-info">
+            <div class="playing-badge" *ngIf="isCurrentSong(song)">
+              <span>NOW PLAYING</span>
+              <span class="equalizer-bars" *ngIf="musicService.isPlaying | async">
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+              </span>
+            </div>
+            <h5 class="song-title" [title]="song.name">{{ song.name }}</h5>
+            
+            <div class="song-actions">
+              <button
+                class="favorite-btn active"
+                (click)="removeFavorite(song, $event)"
+                title="Remove from favorites"
+              >
+                ❤️
+              </button>
+              <button class="play-btn" (click)="playSong(song)">
+                {{
+                  isCurrentSong(song) && (musicService.isPlaying | async)
+                    ? 'Pause'
+                    : 'Play'
+                }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
